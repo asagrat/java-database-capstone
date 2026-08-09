@@ -2,7 +2,7 @@
 import { openModal } from '../components/modals.js';
 import { API_BASE_URL } from '../config/config.js';
 
-const ADMIN_API = `${API_BASE_URL}/admin/login`;
+const ADMIN_API = `${API_BASE_URL}/admin`;
 const DOCTOR_API = `${API_BASE_URL}/doctor/login`;
 
 window.onload = () => {
@@ -32,13 +32,13 @@ window.adminLoginHandler = async function () {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      selectRole("admin");
+      window.selectRole("admin");
     } else {
-      alert("Invalid admin credentials. Please try again.");
+      alert("Invalid credentials!");
     }
   } catch (error) {
     console.error("Admin login error:", error);
-    alert("An error occurred during login. Please try again.");
+    alert("An error occurred during login.");
   }
 };
 
@@ -57,12 +57,12 @@ window.doctorLoginHandler = async function () {
     if (response.ok) {
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      selectRole("doctor");
+      window.selectRole("doctor");
     } else {
-      alert("Invalid doctor credentials. Please try again.");
+      alert("Invalid credentials!");
     }
   } catch (error) {
     console.error("Doctor login error:", error);
-    alert("An error occurred during login. Please try again.");
+    alert("An error occurred during login.");
   }
 };

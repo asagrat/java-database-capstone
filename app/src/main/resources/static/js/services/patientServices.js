@@ -29,16 +29,18 @@ export async function patientSignup(data) {
 
 //For logging in patient
 export async function patientLogin(data) {
-  console.log("patientLogin :: ", data)
-  return await fetch(`${PATIENT_API}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  });
-
-
+  try {
+    return await fetch(`${PATIENT_API}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+  } catch (error) {
+    console.error("Error :: patientLogin :: ", error);
+    return null;
+  }
 }
 
 // For getting patient data (name ,id , etc ). Used in booking appointments
@@ -72,8 +74,11 @@ export async function getPatientAppointments(id, token, user) {
 }
 
 export async function filterAppointments(condition, name, token) {
+  const safeCondition = condition && `${condition}`.trim() ? encodeURIComponent(`${condition}`.trim()) : "null";
+  const safeName = name && `${name}`.trim() ? encodeURIComponent(`${name}`.trim()) : "null";
+
   try {
-    const response = await fetch(`${PATIENT_API}/filter/${condition}/${name}/${token}`, {
+    const response = await fetch(`${PATIENT_API}/filter/${safeCondition}/${safeName}/${token}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

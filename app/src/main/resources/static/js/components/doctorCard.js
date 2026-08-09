@@ -37,9 +37,9 @@ export function createDoctorCard(doctor) {
     const removeBtn = document.createElement("button");
     removeBtn.textContent = "Delete";
     removeBtn.addEventListener("click", async () => {
-      if (\!confirm(`Delete Dr. ${doctor.name}?`)) return;
+      if (!confirm(`Delete Dr. ${doctor.name}?`)) return;
       const token = localStorage.getItem("token");
-      if (\!token) {
+      if (!token) {
         alert("No token found. Please log in again.");
         return;
       }
@@ -64,7 +64,7 @@ export function createDoctorCard(doctor) {
     bookNow.textContent = "Book Now";
     bookNow.addEventListener("click", async (e) => {
       const token = localStorage.getItem("token");
-      if (\!token) {
+      if (!token) {
         alert("Please log in to book an appointment.");
         window.location.href = "/pages/patientDashboard.html";
         return;

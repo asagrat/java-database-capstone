@@ -6,6 +6,11 @@ import { createDoctorCard } from './components/doctorCard.js';
 document.addEventListener("DOMContentLoaded", () => {
   loadDoctorCards();
 
+  const addDoctorBtn = document.getElementById("addDocBtn");
+  if (addDoctorBtn) {
+    addDoctorBtn.addEventListener("click", () => openModal("addDoctor"));
+  }
+
   document.getElementById("searchBar").addEventListener("input", filterDoctorsOnChange);
   document.getElementById("filterTime").addEventListener("change", filterDoctorsOnChange);
   document.getElementById("filterSpecialty").addEventListener("change", filterDoctorsOnChange);
@@ -59,7 +64,7 @@ window.adminAddDoctor = async function () {
   const availableTimes = Array.from(checkboxes).map(cb => cb.value);
 
   const token = localStorage.getItem("token");
-  if (\!token) {
+  if (!token) {
     alert("No authentication token found. Please log in again.");
     return;
   }
@@ -70,7 +75,7 @@ window.adminAddDoctor = async function () {
   if (result.success) {
     alert("Doctor added successfully.");
     document.getElementById("modal").style.display = "none";
-    location.reload();
+    await loadDoctorCards();
   } else {
     alert(result.message || "Failed to add doctor.");
   }

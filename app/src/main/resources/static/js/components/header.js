@@ -19,7 +19,7 @@ function renderHeader() {
   const role = localStorage.getItem("userRole");
   const token = localStorage.getItem("token");
 
-  if ((role === "loggedPatient" || role === "admin" || role === "doctor") && \!token) {
+  if ((role === "loggedPatient" || role === "admin" || role === "doctor") && !token) {
     localStorage.removeItem("userRole");
     alert("Session expired or invalid login. Please log in again.");
     window.location.href = "/";
@@ -59,22 +59,22 @@ function renderHeader() {
 
 function attachHeaderButtonListeners() {
   const adminLoginBtn = document.getElementById("adminLogin");
-  if (adminLoginBtn) {
+  if (adminLoginBtn && typeof openModal === "function") {
     adminLoginBtn.addEventListener("click", () => openModal("adminLogin"));
   }
 
   const doctorLoginBtn = document.getElementById("doctorLogin");
-  if (doctorLoginBtn) {
+  if (doctorLoginBtn && typeof openModal === "function") {
     doctorLoginBtn.addEventListener("click", () => openModal("doctorLogin"));
   }
 
   const patientLoginBtn = document.getElementById("patientLogin");
-  if (patientLoginBtn) {
+  if (patientLoginBtn && typeof openModal === "function") {
     patientLoginBtn.addEventListener("click", () => openModal("patientLogin"));
   }
 
   const patientSignupBtn = document.getElementById("patientSignup");
-  if (patientSignupBtn) {
+  if (patientSignupBtn && typeof openModal === "function") {
     patientSignupBtn.addEventListener("click", () => openModal("patientSignup"));
   }
 }

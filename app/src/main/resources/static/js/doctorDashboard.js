@@ -9,6 +9,7 @@ let patientName = null;
 
 document.addEventListener("DOMContentLoaded", () => {
   renderContent();
+  document.getElementById("datePicker").value = selectedDate;
   loadAppointments();
 
   document.getElementById("searchBar").addEventListener("input", () => {
@@ -34,7 +35,7 @@ async function loadAppointments() {
     const appointments = await getAllAppointments(selectedDate, patientName || "null", token);
     tableBody.innerHTML = "";
 
-    if (\!appointments || appointments.length === 0) {
+    if (!appointments || appointments.length === 0) {
       tableBody.innerHTML = '<tr><td colspan="5" class="noPatientRecord">No Appointments found for today.</td></tr>';
       return;
     }
