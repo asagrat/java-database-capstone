@@ -105,10 +105,15 @@ public class Service {
         Optional<Doctor> doctorOpt = doctorRepository.findById(doctorId);
         if (doctorOpt.isEmpty()) return -1;
 
+        Doctor doctor = doctorOpt.get();
+        String requestedTime = appointment.getAppointmentTime().toLocalTime().toString();
+
+        // Time must be one of the doctor's configured slots
+        if (!doctor.getAvailableTimes().contains(requestedTime)) return 0;
+
+        // Slot is free if no other appointment occupies it on that day
         LocalDate date = appointment.getAppointmentTime().toLocalDate();
         List<String> available = doctorService.getDoctorAvailability(doctorId, date);
-
-        String requestedTime = appointment.getAppointmentTime().toLocalTime().toString();
         return available.contains(requestedTime) ? 1 : 0;
     }
 
