@@ -39,7 +39,7 @@ public class AppointmentController {
             @PathVariable String token) {
 
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "doctor");
-        if (tokenCheck \!= null) {
+        if (tokenCheck != null) {
             Map<String, Object> err = new HashMap<>();
             err.put("message", tokenCheck.getBody().get("message"));
             return ResponseEntity.status(tokenCheck.getStatusCode()).body(err);
@@ -55,7 +55,7 @@ public class AppointmentController {
 
         Map<String, String> response = new HashMap<>();
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "patient");
-        if (tokenCheck \!= null) return tokenCheck;
+        if (tokenCheck != null) return tokenCheck;
 
         int validation = service.validateAppointment(appointment);
         if (validation == -1) {
@@ -82,7 +82,7 @@ public class AppointmentController {
             @PathVariable String token) {
 
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "patient");
-        if (tokenCheck \!= null) return tokenCheck;
+        if (tokenCheck != null) return tokenCheck;
 
         return appointmentService.updateAppointment(appointment);
     }
@@ -93,7 +93,7 @@ public class AppointmentController {
             @PathVariable String token) {
 
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "patient");
-        if (tokenCheck \!= null) return tokenCheck;
+        if (tokenCheck != null) return tokenCheck;
 
         return appointmentService.cancelAppointment(id, token);
     }

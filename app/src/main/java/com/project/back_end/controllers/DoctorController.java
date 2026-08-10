@@ -43,7 +43,7 @@ public class DoctorController {
 
         Map<String, Object> response = new HashMap<>();
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, user);
-        if (tokenCheck \!= null) {
+        if (tokenCheck != null) {
             response.put("message", tokenCheck.getBody().get("message"));
             return ResponseEntity.status(tokenCheck.getStatusCode()).body(response);
         }
@@ -66,7 +66,7 @@ public class DoctorController {
 
         Map<String, String> response = new HashMap<>();
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "admin");
-        if (tokenCheck \!= null) return tokenCheck;
+        if (tokenCheck != null) return tokenCheck;
 
         int result = doctorService.saveDoctor(doctor);
         if (result == 1) {
@@ -92,7 +92,7 @@ public class DoctorController {
 
         Map<String, String> response = new HashMap<>();
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "admin");
-        if (tokenCheck \!= null) return tokenCheck;
+        if (tokenCheck != null) return tokenCheck;
 
         int result = doctorService.updateDoctor(doctor);
         if (result == 1) {
@@ -113,7 +113,7 @@ public class DoctorController {
 
         Map<String, String> response = new HashMap<>();
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "admin");
-        if (tokenCheck \!= null) return tokenCheck;
+        if (tokenCheck != null) return tokenCheck;
 
         int result = doctorService.deleteDoctor(id);
         if (result == 1) {

@@ -57,7 +57,7 @@ public class DoctorService {
 
     public int saveDoctor(Doctor doctor) {
         try {
-            if (doctorRepository.findByEmail(doctor.getEmail()) \!= null) {
+            if (doctorRepository.findByEmail(doctor.getEmail()) != null) {
                 return -1;
             }
             doctorRepository.save(doctor);
@@ -69,7 +69,7 @@ public class DoctorService {
 
     public int updateDoctor(Doctor doctor) {
         try {
-            if (\!doctorRepository.existsById(doctor.getId())) {
+            if (!doctorRepository.existsById(doctor.getId())) {
                 return -1;
             }
             doctorRepository.save(doctor);
@@ -88,7 +88,7 @@ public class DoctorService {
 
     public int deleteDoctor(long id) {
         try {
-            if (\!doctorRepository.existsById(id)) {
+            if (!doctorRepository.existsById(id)) {
                 return -1;
             }
             appointmentRepository.deleteAllByDoctorId(id);
@@ -103,7 +103,7 @@ public class DoctorService {
         Map<String, String> response = new HashMap<>();
         try {
             Doctor doctor = doctorRepository.findByEmail(login.getIdentifier());
-            if (doctor == null || \!doctor.getPassword().equals(login.getPassword())) {
+            if (doctor == null || !doctor.getPassword().equals(login.getPassword())) {
                 response.put("message", "Invalid email or password");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }

@@ -75,7 +75,7 @@ public class AppointmentService {
             Appointment appointment = optional.get();
             String email = tokenService.extractIdentifier(token);
             Patient patient = patientRepository.findByEmail(email);
-            if (patient == null || \!patient.getId().equals(appointment.getPatient().getId())) {
+            if (patient == null || !patient.getId().equals(appointment.getPatient().getId())) {
                 response.put("message", "Unauthorized to cancel this appointment");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
@@ -102,7 +102,7 @@ public class AppointmentService {
             LocalDateTime end = date.atTime(23, 59, 59);
 
             List<Appointment> appointments;
-            if (pname \!= null && \!pname.isBlank() && \!"null".equalsIgnoreCase(pname)) {
+            if (pname != null && !pname.isBlank() && !"null".equalsIgnoreCase(pname)) {
                 appointments = appointmentRepository
                         .findByDoctorIdAndPatient_NameContainingIgnoreCaseAndAppointmentTimeBetween(
                                 doctor.getId(), pname, start, end);

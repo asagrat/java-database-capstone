@@ -45,7 +45,7 @@ public class PatientService {
         try {
             String email = tokenService.extractIdentifier(token);
             Patient patient = patientRepository.findByEmail(email);
-            if (patient == null || \!patient.getId().equals(id)) {
+            if (patient == null || !patient.getId().equals(id)) {
                 response.put("message", "Unauthorized access");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }

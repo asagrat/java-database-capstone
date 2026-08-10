@@ -5,35 +5,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Map;
-
 @Controller
 public class DashboardController {
-	private final Service service;
 
-	public DashboardController(Service service) {
-		this.service = service;
-	}
+    private final Service service;
 
-	@GetMapping("/adminDashboard/{token}")
-	public String adminDashboard(@PathVariable String token) {
-		Map<String, String> validation = service.validateToken(token, "admin");
-		if (validation.isEmpty()) {
-			return "admin/adminDashboard";
-		}
+    public DashboardController(Service service) {
+        this.service = service;
+    }
 
-		return "redirect:/";
-	}
+    @GetMapping("/adminDashboard/{token}")
+    public String adminDashboard(@PathVariable String token) {
+        if (service.validateToken(token, "admin") == null) {
+            return "admin/adminDashboard";
+        }
+        return "redirect:/";
+    }
 
-	@GetMapping("/doctorDashboard/{token}")
-	public String doctorDashboard(@PathVariable String token) {
-		Map<String, String> validation = service.validateToken(token, "doctor");
-		if (validation.isEmpty()) {
-			return "doctor/doctorDashboard";
-		}
-
-		return "redirect:/";
-	}
-
-
+    @GetMapping("/doctorDashboard/{token}")
+    public String doctorDashboard(@PathVariable String token) {
+        if (service.validateToken(token, "doctor") == null) {
+            return "doctor/doctorDashboard";
+        }
+        return "redirect:/";
+    }
 }

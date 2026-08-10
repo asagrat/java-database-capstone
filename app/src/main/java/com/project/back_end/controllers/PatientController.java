@@ -32,7 +32,7 @@ public class PatientController {
     @GetMapping("/{token}")
     public ResponseEntity<Map<String, Object>> getPatientDetails(@PathVariable String token) {
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "patient");
-        if (tokenCheck \!= null) {
+        if (tokenCheck != null) {
             Map<String, Object> err = new HashMap<>();
             err.put("message", tokenCheck.getBody().get("message"));
             return ResponseEntity.status(tokenCheck.getStatusCode()).body(err);
@@ -43,7 +43,7 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<Map<String, String>> createPatient(@Valid @RequestBody Patient patient) {
         Map<String, String> response = new HashMap<>();
-        if (\!service.validatePatient(patient)) {
+        if (!service.validatePatient(patient)) {
             response.put("message", "Patient with email id or phone no already exist");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
@@ -67,7 +67,7 @@ public class PatientController {
             @PathVariable String token) {
 
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "patient");
-        if (tokenCheck \!= null) {
+        if (tokenCheck != null) {
             Map<String, Object> err = new HashMap<>();
             err.put("message", tokenCheck.getBody().get("message"));
             return ResponseEntity.status(tokenCheck.getStatusCode()).body(err);
@@ -82,7 +82,7 @@ public class PatientController {
             @PathVariable String token) {
 
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "patient");
-        if (tokenCheck \!= null) {
+        if (tokenCheck != null) {
             Map<String, Object> err = new HashMap<>();
             err.put("message", tokenCheck.getBody().get("message"));
             return ResponseEntity.status(tokenCheck.getStatusCode()).body(err);

@@ -10,7 +10,6 @@ import com.project.back_end.repo.DoctorRepository;
 import com.project.back_end.repo.PatientRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Service
+@org.springframework.stereotype.Service
 public class Service {
 
     private final TokenService tokenService;
@@ -49,7 +48,7 @@ public class Service {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
         boolean valid = tokenService.validateToken(token, user);
-        if (\!valid) {
+        if (!valid) {
             response.put("message", "Invalid or expired token");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
@@ -60,7 +59,7 @@ public class Service {
         Map<String, String> response = new HashMap<>();
         try {
             Admin admin = adminRepository.findByUsername(receivedAdmin.getUsername());
-            if (admin == null || \!admin.getPassword().equals(receivedAdmin.getPassword())) {
+            if (admin == null || !admin.getPassword().equals(receivedAdmin.getPassword())) {
                 response.put("message", "Invalid credentials");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
@@ -74,9 +73,9 @@ public class Service {
     }
 
     public Map<String, Object> filterDoctor(String name, String specialty, String time) {
-        boolean hasName = name \!= null && \!name.isBlank() && \!"null".equalsIgnoreCase(name);
-        boolean hasSpecialty = specialty \!= null && \!specialty.isBlank() && \!"null".equalsIgnoreCase(specialty);
-        boolean hasTime = time \!= null && \!time.isBlank() && \!"null".equalsIgnoreCase(time);
+        boolean hasName = name != null && !name.isBlank() && !"null".equalsIgnoreCase(name);
+        boolean hasSpecialty = specialty != null && !specialty.isBlank() && !"null".equalsIgnoreCase(specialty);
+        boolean hasTime = time != null && !time.isBlank() && !"null".equalsIgnoreCase(time);
 
         if (hasName && hasSpecialty && hasTime) {
             return doctorService.filterDoctorsByNameSpecilityandTime(name, specialty, time);
@@ -100,7 +99,7 @@ public class Service {
     }
 
     public int validateAppointment(Appointment appointment) {
-        Long doctorId = appointment.getDoctor() \!= null ? appointment.getDoctor().getId() : null;
+        Long doctorId = appointment.getDoctor() != null ? appointment.getDoctor().getId() : null;
         if (doctorId == null) return -1;
 
         Optional<Doctor> doctorOpt = doctorRepository.findById(doctorId);
@@ -122,7 +121,7 @@ public class Service {
         Map<String, String> response = new HashMap<>();
         try {
             Patient patient = patientRepository.findByEmail(login.getIdentifier());
-            if (patient == null || \!patient.getPassword().equals(login.getPassword())) {
+            if (patient == null || !patient.getPassword().equals(login.getPassword())) {
                 response.put("message", "Invalid email or password");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
@@ -145,8 +144,8 @@ public class Service {
         }
         Long patientId = patient.getId();
 
-        boolean hasCondition = condition \!= null && \!condition.isBlank() && \!"null".equalsIgnoreCase(condition);
-        boolean hasName = name \!= null && \!name.isBlank() && \!"null".equalsIgnoreCase(name);
+        boolean hasCondition = condition != null && !condition.isBlank() && !"null".equalsIgnoreCase(condition);
+        boolean hasName = name != null && !name.isBlank() && !"null".equalsIgnoreCase(name);
 
         if (hasCondition && hasName) {
             return patientService.filterByDoctorAndCondition(condition, name, patientId);

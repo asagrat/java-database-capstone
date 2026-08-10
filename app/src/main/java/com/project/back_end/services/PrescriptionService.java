@@ -23,7 +23,7 @@ public class PrescriptionService {
         Map<String, String> response = new HashMap<>();
         try {
             List<Prescription> existing = prescriptionRepository.findByAppointmentId(prescription.getAppointmentId());
-            if (\!existing.isEmpty()) {
+            if (!existing.isEmpty()) {
                 response.put("message", "Prescription already exists for this appointment");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }

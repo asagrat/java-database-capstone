@@ -33,7 +33,7 @@ public class PrescriptionController {
             @PathVariable String token) {
 
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "doctor");
-        if (tokenCheck \!= null) return tokenCheck;
+        if (tokenCheck != null) return tokenCheck;
 
         return prescriptionService.savePrescription(prescription);
     }
@@ -44,7 +44,7 @@ public class PrescriptionController {
             @PathVariable String token) {
 
         ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "doctor");
-        if (tokenCheck \!= null) {
+        if (tokenCheck != null) {
             Map<String, Object> err = new HashMap<>();
             err.put("message", tokenCheck.getBody().get("message"));
             return ResponseEntity.status(tokenCheck.getStatusCode()).body(err);
