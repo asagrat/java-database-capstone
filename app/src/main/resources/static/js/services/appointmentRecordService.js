@@ -10,7 +10,8 @@ export async function getAllAppointments(date, patientName, token) {
     throw new Error("Failed to fetch appointments");
   }
 
-  return await response.json();
+  const data = await response.json();
+  return data.appointments || [];
 }
 
 export async function bookAppointment(appointment, token) {
