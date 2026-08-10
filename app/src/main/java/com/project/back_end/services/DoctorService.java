@@ -179,15 +179,19 @@ public class DoctorService {
     }
 
     private List<Doctor> filterDoctorByTime(List<Doctor> doctors, String amOrPm) {
+        boolean isAmPm = "AM".equalsIgnoreCase(amOrPm) || "PM".equalsIgnoreCase(amOrPm);
         return doctors.stream().filter(doctor -> {
             doctor.getAvailableTimes().size(); // force load
             return doctor.getAvailableTimes().stream().anyMatch(slot -> {
                 try {
-                    LocalTime time = LocalTime.parse(slot);
-                    if ("AM".equalsIgnoreCase(amOrPm)) {
-                        return time.getHour() < 12;
+                    if (isAmPm) {
+                        // slots are stored as ranges; parse only the start
+                        String start = slot.contains("-") ? slot.split("-")[0].trim() : slot.trim();
+                        LocalTime time = LocalTime.parse(start);
+                        return "AM".equalsIgnoreCase(amOrPm) ? time.getHour() < 12 : time.getHour() >= 12;
                     } else {
-                        return time.getHour() >= 12;
+                        // exact slot match, e.g. "09:00-10:00"
+                        return slot.equalsIgnoreCase(amOrPm);
                     }
                 } catch (Exception e) {
                     return false;
