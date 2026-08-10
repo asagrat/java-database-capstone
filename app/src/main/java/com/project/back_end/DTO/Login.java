@@ -1,7 +1,10 @@
 package com.project.back_end.DTO;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class Login {
 
+    @JsonAlias({"email", "username"})
     private String identifier;
     private String password;
 
