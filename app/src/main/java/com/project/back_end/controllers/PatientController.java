@@ -61,12 +61,13 @@ public class PatientController {
         return service.validatePatientLogin(login);
     }
 
-    @GetMapping("/{id}/{token}")
+    @GetMapping("/{id}/{user}/{token}")
     public ResponseEntity<Map<String, Object>> getPatientAppointments(
             @PathVariable Long id,
+            @PathVariable String user,
             @PathVariable String token) {
 
-        ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, "patient");
+        ResponseEntity<Map<String, String>> tokenCheck = service.validateToken(token, user);
         if (tokenCheck != null) {
             Map<String, Object> err = new HashMap<>();
             err.put("message", tokenCheck.getBody().get("message"));
