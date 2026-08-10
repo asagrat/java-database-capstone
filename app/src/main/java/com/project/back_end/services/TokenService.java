@@ -48,13 +48,17 @@ public class TokenService {
 				.compact();
 	}
 
-	public String extractEmail(String token) {
-		return Jwts.parser()
-				.verifyWith(getSigningKey())
-				.build()
-				.parseSignedClaims(token)
-				.getPayload()
-				.getSubject();
+public String extractIdentifier(String token) {
+                return Jwts.parser()
+                                .verifyWith(getSigningKey())
+                                .build()
+                                .parseSignedClaims(token)
+                                .getPayload()
+                                .getSubject();
+        }
+
+        public String extractEmail(String token) {
+                return extractIdentifier(token);
 	}
 
 	public boolean validateToken(String token, String role) {
