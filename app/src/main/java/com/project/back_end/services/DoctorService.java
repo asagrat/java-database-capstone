@@ -41,7 +41,10 @@ public class DoctorService {
         if (opt.isEmpty()) return new ArrayList<>();
 
         Doctor doctor = opt.get();
-        List<String> allSlots = new ArrayList<>(doctor.getAvailableTimes());
+        // Extract start time from each range slot (e.g. "09:00-10:00" → "09:00")
+        List<String> allSlots = doctor.getAvailableTimes().stream()
+                .map(t -> { int d = t.indexOf('-'); return d > 0 ? t.substring(0, d).trim() : t.trim(); })
+                .collect(Collectors.toList());
 
         LocalDateTime start = date.atStartOfDay();
         LocalDateTime end = date.atTime(23, 59, 59);

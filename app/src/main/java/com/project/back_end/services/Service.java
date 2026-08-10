@@ -108,13 +108,20 @@ public class Service {
         Doctor doctor = doctorOpt.get();
         String requestedTime = appointment.getAppointmentTime().toLocalTime().toString();
 
-        // Time must be one of the doctor's configured slots
-        if (!doctor.getAvailableTimes().contains(requestedTime)) return 0;
+        // Available times are stored as ranges (e.g. "09:00-10:00"); compare against start time only
+        boolean timeInSlots = doctor.getAvailableTimes().stream()
+                .anyMatch(slot -> startOf(slot).equals(requestedTime));
+        if (!timeInSlots) return 0;
 
-        // Slot is free if no other appointment occupies it on that day
         LocalDate date = appointment.getAppointmentTime().toLocalDate();
         List<String> available = doctorService.getDoctorAvailability(doctorId, date);
         return available.contains(requestedTime) ? 1 : 0;
+    }
+
+    // Extract start time from a slot that may be "HH:mm-HH:mm" or plain "HH:mm"
+    private String startOf(String slot) {
+        int dash = slot.indexOf('-');
+        return dash > 0 ? slot.substring(0, dash).trim() : slot.trim();
     }
 
     public boolean validatePatient(Patient patient) {
