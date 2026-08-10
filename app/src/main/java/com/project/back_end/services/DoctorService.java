@@ -102,7 +102,7 @@ public class DoctorService {
     public ResponseEntity<Map<String, String>> validateDoctor(Login login) {
         Map<String, String> response = new HashMap<>();
         try {
-            Doctor doctor = doctorRepository.findByEmail(login.getIdentifier());
+            Doctor doctor = doctorRepository.findByEmail(login.getEmail());
             if (doctor == null || !doctor.getPassword().equals(login.getPassword())) {
                 response.put("message", "Invalid email or password");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
